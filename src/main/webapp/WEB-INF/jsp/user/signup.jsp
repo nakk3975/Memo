@@ -85,7 +85,7 @@
 					, success:function(data) {
 						if(data.result == "success"){
 							alert("가입이 완료되었습니다.");
-							
+							location.href="/user/signin/view";
 						} else {
 							alert("가입 오류");
 						}
@@ -94,7 +94,6 @@
 						alert("입력 오류");
 					}
 				});
-				
 			});
 		});
 	</script>

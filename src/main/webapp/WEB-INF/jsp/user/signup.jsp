@@ -51,7 +51,7 @@
 				let name = $("#nameInput").val();
 				let email = $("#emailInput").val();
 				
-				if(!valueCheck($("#idInput"), "id")){
+				if(!valueCheck($("#idInput"), "아이디")){
 					return;
 				}
 				

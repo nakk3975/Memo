@@ -12,4 +12,9 @@ public class PostController {
 	public String listView() {
 		return "post/list";
 	}
+	
+	@GetMapping("create/view")
+	public String createView() {
+		return "post/create";
+	}
 }

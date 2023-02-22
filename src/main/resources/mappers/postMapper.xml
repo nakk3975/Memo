@@ -74,6 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`title` = #{title}
 			, `content` = #{content}
 			, `updatedAt` = now()
+		WHERE
+			`id` = #{postId}
 	</update>
 
 </mapper>

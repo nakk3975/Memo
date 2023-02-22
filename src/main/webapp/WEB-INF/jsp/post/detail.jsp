@@ -34,9 +34,9 @@
 				<div class="d-flex justify-content-between mt-3">
 					<div>
 						<a href="/post/list/view" class="btn btn-info">목록으로</a>
-						<button type="button" class="btn btn-danger" id="deleteBtn" data-id="${post.id}">삭제</button>
+						<button type="button" class="btn btn-danger" id="deleteBtn" data-post-id="${post.id}">삭제</button>
 					</div>
-					<button type="button" class="btn btn-primary" id="saveBtn">저장</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-post-id="${post.id}">수정</button>
 				</div>
 			</div>
 		</section>
@@ -46,7 +46,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#deleteBtn").on("click", function() {
-				let id = $(this).data("id");
+				let id = $(this).data("post-id");
 				
 				$.ajax({
 					type:"get"
@@ -68,6 +68,7 @@
 			$("#saveBtn").on("click", function() {
 				let title = $("#titleInput").val();
 				let content = $("#contentInput").val();
+				let id = $(this).data("post-id");
 				
 				if(title == "") {
 					alert("제목을 입력하세요.");
@@ -82,7 +83,7 @@
 				$.ajax({
 					type:"post"
 					, url:"/post/update"
-					, data:{"title":title, "content":content}
+					, data:{"id":id, "title":title, "content":content}
 					, success:function(data) {
 						if(data.result == "success"){
 							location.href="/post/list/view";

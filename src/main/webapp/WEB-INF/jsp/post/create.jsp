@@ -56,6 +56,7 @@
 					alert("내용을 입력하세요.");
 					return;
 				}
+				
 				var formData = new FormData();
 				formData.append("title", title);
 				formData.append("content", content);

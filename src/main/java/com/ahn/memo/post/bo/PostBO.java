@@ -17,8 +17,11 @@ public class PostBO {
 	private PostDAO postDAO;
 	
 	public int addPost(int userId, String title, String content, MultipartFile file) {
+		String imagePath = null;
 		
-		String imagePath = FileManagerService.saveFile(userId, file);
+		if(file != null) {
+			imagePath = FileManagerService.saveFile(userId, file);	
+		}
 		
 		return postDAO.insertPost(userId, title, content, imagePath);
 	}
@@ -32,6 +35,13 @@ public class PostBO {
 	}
 	
 	public int deletePost(int postId) {
+		
+		Post post = postDAO.selectPost(postId);
+		
+		if(post.getImagePath() != null) {
+			FileManagerService.removeFile(post.getImagePath());
+		}
+		
 		return postDAO.deletePost(postId);
 	}
 	

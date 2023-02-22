@@ -27,7 +27,7 @@ public class PostRestController {
 	public Map<String, String> postCreate(
 			@RequestParam("title") String title
 			, @RequestParam("content") String content
-			, @RequestParam("file") MultipartFile file
+			, @RequestParam(value="file", required=false) MultipartFile file
 			, HttpServletRequest request) {
 		
 		// 로그인된 사용자의 user 테이블 id 컬럼 값
@@ -64,14 +64,10 @@ public class PostRestController {
 	}
 	
 	@PostMapping("/update")
-	public Map<String, String> postUpdate(
-			@RequestParam("title") String title
-			, @RequestParam("content") String content
-			, HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		
-		int postId = (Integer)session.getAttribute("postId");
+	public Map<String, String> modifyMemo(
+			@RequestParam("id") int postId
+			, @RequestParam("title") String title
+			, @RequestParam("content") String content) {
 		
 		int count = postBO.updatePost(postId, title, content);
 		

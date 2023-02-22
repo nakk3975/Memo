@@ -20,19 +20,22 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<section class="d-flex justify-content-center">
 			<div class="input-box my-5">
-				<h1 class="text-center">메모 입력</h1>
+				<h1 class="text-center">메모 보기</h1>
 				<div class="d-flex">
 					<label class="col-2">제목 : </label>
-					<input type="text" class="form-control col-10" id="titleInput">
+					<input type="text" class="form-control col-10" id="titleInput" value="${post.title}">
 				</div>
 				<div class="mt-3">
-					<textarea class="form-control" rows="10" id="contentInput"></textarea>
+					<textarea class="form-control" rows="10" id="contentInput">${post.content}</textarea>
 				</div>
-				<div class="mt-2">
-					<input type="file" id="fileInput">
+				<div class="mt-3">
+					<img src="${post.imagePath}" width="650px">
 				</div>
 				<div class="d-flex justify-content-between mt-3">
-					<a href="/post/list/view" class="btn btn-info">목록으로</a>
+					<div>
+						<a href="/post/list/view" class="btn btn-info">목록으로</a>
+						<button type="button" class="btn btn-danger" id="deleteBtn" data-id="${post.id}">삭제</button>
+					</div>
 					<button type="button" class="btn btn-primary" id="saveBtn">저장</button>
 				</div>
 			</div>
@@ -42,11 +45,30 @@
 	
 	<script>
 		$(document).ready(function() {
+			$("#deleteBtn").on("click", function() {
+				let id = $(this).data("id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/delete"
+					, data:{"id":id}
+					, success:function(data) {
+						if(data.result == "success") {
+							location.href = "/post/list/view";
+						} else {
+							alert("삭제 실패");
+						}
+					}
+					, error:function() {
+						alert("삭제 에러");
+					}
+				});
+			});
 			
 			$("#saveBtn").on("click", function() {
 				let title = $("#titleInput").val();
 				let content = $("#contentInput").val();
-
+				
 				if(title == "") {
 					alert("제목을 입력하세요.");
 					return;
@@ -56,18 +78,11 @@
 					alert("내용을 입력하세요.");
 					return;
 				}
-				var formData = new FormData();
-				formData.append("title", title);
-				formData.append("content", content);
-				formData.append("file", $("#fileInput")[0].files[0]);
 				
 				$.ajax({
 					type:"post"
-					, url:"/post/create"
-					, data:formData
-					, enctype:"multipart/form-data"	// 파일 업로드 필수 항목
-					, processData:false	// 파일 업로드 필수 항목
-					, contentType:false	// 파일 업로드 필수 항목
+					, url:"/post/update"
+					, data:{"title":title, "content":content}
 					, success:function(data) {
 						if(data.result == "success"){
 							location.href="/post/list/view";

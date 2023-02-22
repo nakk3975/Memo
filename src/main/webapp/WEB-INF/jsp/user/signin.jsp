@@ -42,6 +42,7 @@
 		}
 	
 		$(document).ready(function() {
+			
 			$("#loginBtn").on("click", function() {
 				let id = $("#idInput").val();
 				let password = $("#passwordInput").val();

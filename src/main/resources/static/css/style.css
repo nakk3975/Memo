@@ -18,6 +18,10 @@ header {
 	width:650px;
 }
 
+#table-title {
+	background-color: #dddddd
+}
+
 footer {
 	height:50px;
 	background-color: #dddddd

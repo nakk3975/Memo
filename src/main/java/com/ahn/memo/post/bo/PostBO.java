@@ -16,9 +16,10 @@ public class PostBO {
 	@Autowired
 	private PostDAO postDAO;
 	
+	// 글 쓰기
 	public int addPost(int userId, String title, String content, MultipartFile file) {
 		String imagePath = null;
-		
+		// 파일 저장
 		if(file != null) {
 			imagePath = FileManagerService.saveFile(userId, file);	
 		}
@@ -26,9 +27,11 @@ public class PostBO {
 		return postDAO.insertPost(userId, title, content, imagePath);
 	}
 	
+	// 전체 리스트 불러오기
 	public List<Post> selectPostList(int userId) {
 		return postDAO.selectList(userId);
 	}
+	
 	
 	public Post getPost(int postId) {
 		return postDAO.selectPost(postId);
@@ -41,7 +44,6 @@ public class PostBO {
 		if(post.getImagePath() != null) {
 			FileManagerService.removeFile(post.getImagePath());
 		}
-		
 		return postDAO.deletePost(postId);
 	}
 	

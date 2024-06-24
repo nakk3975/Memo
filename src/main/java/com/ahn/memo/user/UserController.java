@@ -17,6 +17,7 @@ public class UserController {
 		return "user/signup";
 	}
 	
+	//로그인 화면
 	@GetMapping("/signin/view")
 	public String signinView() {
 		return "user/signin";

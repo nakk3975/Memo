@@ -30,36 +30,38 @@ public class PostRestController {
 			, @RequestParam(value="file", required=false) MultipartFile file
 			, HttpServletRequest request) {
 		
-		// 로그인된 사용자의 user 테이블 id 컬럼 값
-		HttpSession session = request.getSession();
-		
-		int userId = (Integer)session.getAttribute("userId");
-		
-		int count = postBO.addPost(userId, title, content, file);
-		
+		HttpSession session = request.getSession(false);
 		Map<String, String> result = new HashMap<>();
 		
-		if(count == 1) {
-			result.put("result", "success");
-		} else {
+		if(session == null || !(session.getAttribute("userId") instanceof Integer)) {
 			result.put("result", "fail");
+			return result;
 		}
 		
+		int userId = (Integer) session.getAttribute("userId");
+		int count = postBO.addPost(userId, title, content, file);
+		
+		result.put("result", count == 1 ? "success" : "fail");
 		return result;
 	}
 	
 	@GetMapping("/delete")
-	public Map<String, String> postDelete(@RequestParam("id") int postId) {
-		
-		int count = postBO.deletePost(postId);
+	public Map<String, String> postDelete(
+			@RequestParam("id") int postId
+			, HttpServletRequest request) {
 		
 		Map<String, String> result = new HashMap<>();
+		HttpSession session = request.getSession(false);
 		
-		if(count == 1) {
-			result.put("result", "success");
-		} else {
+		if(session == null || !(session.getAttribute("userId") instanceof Integer)) {
 			result.put("result", "fail");
+			return result;
 		}
+		
+		int userId = (Integer) session.getAttribute("userId");
+		int count = postBO.deletePost(postId, userId);
+		
+		result.put("result", count == 1 ? "success" : "fail");
 		return result;
 	}
 	
@@ -67,18 +69,21 @@ public class PostRestController {
 	public Map<String, String> modifyMemo(
 			@RequestParam("id") int postId
 			, @RequestParam("title") String title
-			, @RequestParam("content") String content) {
-		
-		int count = postBO.updatePost(postId, title, content);
+			, @RequestParam("content") String content
+			, HttpServletRequest request) {
 		
 		Map<String, String> result = new HashMap<>();
+		HttpSession session = request.getSession(false);
 		
-		if(count == 1) {
-			result.put("result", "success");
-		} else {
+		if(session == null || !(session.getAttribute("userId") instanceof Integer)) {
 			result.put("result", "fail");
+			return result;
 		}
 		
+		int userId = (Integer) session.getAttribute("userId");
+		int count = postBO.updatePost(postId, userId, title, content);
+		
+		result.put("result", count == 1 ? "success" : "fail");
 		return result;
 	}
 	

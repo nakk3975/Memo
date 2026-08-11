@@ -24,13 +24,13 @@ public class PostController {
 	
 	@GetMapping("/list/view")
 	public String listView(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session == null || !(session.getAttribute("userId") instanceof Integer)) {
+			return "redirect:/user/signin/view";
+		}
 		
-		HttpSession session = request.getSession();
-		
-		int userId = (Integer)session.getAttribute("userId");
-		
+		int userId = (Integer) session.getAttribute("userId");
 		List<Post> postList = postBO.selectPostList(userId);
-		
 		model.addAttribute("posts", postList);
 		
 		return "post/list";
@@ -44,12 +44,22 @@ public class PostController {
 	@GetMapping("/detail/view")
 	public String detailView(
 			@RequestParam("postId") int postId
-			,Model model) {
+			, Model model
+			, HttpServletRequest request) {
 		
-		Post post = postBO.getPost(postId);
+		HttpSession session = request.getSession(false);
+		if(session == null || !(session.getAttribute("userId") instanceof Integer)) {
+			return "redirect:/user/signin/view";
+		}
+		
+		int userId = (Integer) session.getAttribute("userId");
+		Post post = postBO.getPost(postId, userId);
+		
+		if(post == null) {
+			return "redirect:/post/list/view";
+		}
 		
 		model.addAttribute("post", post);
-		
 		return "post/detail";
 	}
 }

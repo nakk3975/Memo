@@ -20,7 +20,7 @@ public class PostBO {
 	public int addPost(int userId, String title, String content, MultipartFile file) {
 		String imagePath = null;
 		// 파일 저장
-		if(file != null) {
+		if(file != null && !file.isEmpty()) {
 			imagePath = FileManagerService.saveFile(userId, file);	
 		}
 		
@@ -32,23 +32,25 @@ public class PostBO {
 		return postDAO.selectList(userId);
 	}
 	
-	
-	public Post getPost(int postId) {
-		return postDAO.selectPost(postId);
+	public Post getPost(int postId, int userId) {
+		return postDAO.selectPost(postId, userId);
 	}
 	
-	public int deletePost(int postId) {
+	public int deletePost(int postId, int userId) {
+		Post post = postDAO.selectPost(postId, userId);
 		
-		Post post = postDAO.selectPost(postId);
+		if(post == null) {
+			return 0;
+		}
 		
 		if(post.getImagePath() != null) {
 			FileManagerService.removeFile(post.getImagePath());
 		}
-		return postDAO.deletePost(postId);
+		return postDAO.deletePost(postId, userId);
 	}
 	
-	public int updatePost(int postId, String title, String content) {
-		return postDAO.updatePost(postId, title, content);
+	public int updatePost(int postId, int userId, String title, String content) {
+		return postDAO.updatePost(postId, userId, title, content);
 	}
 
 }

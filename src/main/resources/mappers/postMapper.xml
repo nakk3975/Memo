@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`id` DESC	
 	</select>
 	
-	<select id="selectPost" parameterType="int"
+	<select id="selectPost" parameterType="map"
 	resultType="com.ahn.memo.post.model.Post">
 		SELECT
 			`id`
@@ -57,14 +57,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`post`
 		WHERE
 			`id` = #{postId}
-	
+			AND `userId` = #{userId}
 	</select>
 	
-	<delete id="deletePost" parameterType="int">
+	<delete id="deletePost" parameterType="map">
 		DELETE FROM
 			`post`
 		WHERE
 			`id` = #{postId}
+			AND `userId` = #{userId}
 	</delete>
 	
 	<update id="updatePost" parameterType="map">
@@ -76,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, `updatedAt` = now()
 		WHERE
 			`id` = #{postId}
+			AND `userId` = #{userId}
 	</update>
 
 </mapper>

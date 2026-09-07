@@ -1,16 +1,20 @@
 # Memo
 
+> 웹 프로젝트 · 회원 인증·CRUD·파일 업로드
+
 회원 기능과 이미지 첨부가 가능한 메모 CRUD를 구현한 Spring Boot 웹 프로젝트입니다.
 
 ## 주요 기능
 
 ### 회원
+
 - 회원가입
 - 비밀번호 암호화
 - 로그인 / 로그아웃
 - 로그인 상태 확인을 위한 인터셉터 적용
 
 ### 메모
+
 - 메모 작성
 - 메모 목록 조회
 - 메모 수정
@@ -20,13 +24,24 @@
 
 ## 기술 스택
 
-- Java 17
-- Spring Boot 3.0.2
-- Spring MVC
-- MyBatis 3.0.0
-- MySQL
-- JSP / JSTL
-- Gradle
+| 영역 | 기술 |
+| --- | --- |
+| 언어 | Java 17 |
+| 프레임워크·라이브러리 | Spring Boot 3.0.2, Spring MVC |
+| 데이터·라이브러리 | MyBatis 3.0.0, MySQL |
+| 화면 | JSP / JSTL |
+| 개발 도구 | Gradle |
+
+## 코드 둘러보기
+
+| 위치 | 내용 |
+| --- | --- |
+| [memo/user](src/main/java/com/ahn/memo/user) | 회원 인증 |
+| [memo/post](src/main/java/com/ahn/memo/post) | 메모 CRUD |
+| [FileManagerService.java](src/main/java/com/ahn/memo/common/FileManagerService.java) | 이미지 파일 관리 |
+| [PermissionInterceptor.java](src/main/java/com/ahn/memo/common/PermissionInterceptor.java) | 로그인 상태 확인 |
+| [src/main/resources/mappers](src/main/resources/mappers) | MyBatis SQL 매퍼 |
+| [src/main/webapp/WEB-INF/jsp](src/main/webapp/WEB-INF/jsp) | JSP 화면 |
 
 ## 실행 방법
 
@@ -45,3 +60,7 @@ gradlew.bat bootRun
 ## 목적
 
 회원 인증부터 DB CRUD, 파일 업로드, 인터셉터까지 일반적인 웹 애플리케이션의 기본 기능을 직접 구현하며 Spring MVC와 MyBatis의 동작 방식을 학습하기 위해 만든 프로젝트입니다.
+
+---
+
+**함께 보기** · [TripPlan](https://github.com/nakk3975/TripPlan) · [2Team-Workspace](https://github.com/nakk3975/2Team-Workspace)

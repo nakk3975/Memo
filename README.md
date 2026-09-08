@@ -1,5 +1,7 @@
 # Memo
 
+[개발자 소개 · 전체 프로젝트](https://github.com/nakk3975/TripPlan/blob/main/PORTFOLIO.md)
+
 > 웹 프로젝트 · 회원 인증·CRUD·파일 업로드
 
 회원 기능과 이미지 첨부가 가능한 메모 CRUD를 구현한 Spring Boot 웹 프로젝트입니다.
